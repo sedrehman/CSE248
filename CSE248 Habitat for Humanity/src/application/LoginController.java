@@ -1,6 +1,7 @@
 package application;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
@@ -18,14 +19,18 @@ public class LoginController implements Initializable {
 	private TextField usernameField;
 	@FXML
 	private PasswordField passwordField;
-	
-	public void login(ActionEvent event) {
-		messageLbl.setText("Login button is clicked!");
+
+	public void login(ActionEvent event) throws SQLException {
+		if(loginModel.isLogin(usernameField.getText(), passwordField.getText())) {
+			messageLbl.setText("login success!");
+		} else {
+			messageLbl.setText("Login failure!");
+		}
 	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		if(loginModel.isDBConnected()) {
+		if (loginModel.isDBConnected()) {
 			messageLbl.setText("Connected");
 		} else {
 			messageLbl.setText("Not Connected");
